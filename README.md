@@ -70,4 +70,4 @@ The implementation either makes use or is inspired by the implementation of:<br>
 [.env]: [https://pypi.org/project/python-dotenv/](https://pypi.org/project/python-dotenv/) <br>
 [requirements.txt](./requirements.txt)
 ## Licence
-MIT [LICENSE](./LICENSE)
+MIT [LICENSE](./LICENSE.md)
