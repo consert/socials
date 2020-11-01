@@ -9,7 +9,7 @@ Started with Facebook, Instagram, Twitter, Mastodon, LinkedIn
 ## Usage & Requirements
 
 For every network, you will need authentication. <br>
-You should first provide the required credentials in a dot env file (`cp env.template .env)`).<br>
+You should first provide the required credentials in a dot env file (`cp env.template .env`).<br>
 A template is available here: [./env.template](./env.template) with contents:
 
 ```
