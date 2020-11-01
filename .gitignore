@@ -1,5 +1,8 @@
 *.env
 .idea
 config
+build
+dist
 .ipynb*
 **/__pycache__
+**.egg-info

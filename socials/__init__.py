@@ -14,4 +14,15 @@ except ImportError:
     from socials.sns import Facebook, Instagram, LinkedIn, Twitter, Mastodon
     from socials import SocialNetwork
 
-__all__ = ["Facebook", "Instagram", "LinkedIn", "Twitter", "Mastodon", "SocialNetwork"]
+
+__version__ = "0.0.1"
+
+__all__ = [
+    "__version__",
+    "Facebook",
+    "Instagram",
+    "LinkedIn",
+    "Twitter",
+    "Mastodon",
+    "SocialNetwork",
+]
