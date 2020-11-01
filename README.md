@@ -9,7 +9,7 @@ Started with Facebook, Instagram, Twitter, Mastodon, LinkedIn
 ## Usage & Requirements
 
 For every network, you will need authentication. <br>
-You should first provide the required credentials in a dot env file.<br>
+You should first provide the required credentials in a dot env file (`cp env.template .env)`).<br>
 A template is available here: [./env.template](./env.template) with contents:
 
 ```
@@ -43,7 +43,7 @@ LINKEDIN_REDIRECT_URI=http://localhost:8000/
 LINKEDIN_APP_CLIENT_ID=
 LINKEDIN_APP_CLIENT_SECRET=
 # if you already have add them below:
-# else, an attempt to get then will be made on first run
+# else, an attempt to get them will be made on first run
 LINKEDIN_ACCESS_TOKEN=
 LINKEDIN_REFRESH_TOKEN=
 LINKEDIN_TOKEN_CREATED_AT=1604090956.07258
