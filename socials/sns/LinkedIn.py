@@ -43,7 +43,7 @@ class LinkedIn(SocialNetwork):
             me = self.request("GET", f"{self.base_url}/me", headers=self.headers)
             self.my_urn = f"urn:li:person:{me.get('id')}"
             if self.debug:
-                print("Your urn is:", self.my_urn)
+                print("Initialized")
 
         except (requests.HTTPError, Exception) as err:
             if debug:

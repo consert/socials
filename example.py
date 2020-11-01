@@ -64,7 +64,7 @@ def facebook_example(debug=True):  # noqa
 
 def twitter_example(debug=True):  # noqa
     twitter = Twitter(debug=debug)
-    print(twitter.header_oauth)
+    twitter.post(text=one_post_message)
 
 
 def mastodon_example(debug=True):  # noqa

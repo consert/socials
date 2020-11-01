@@ -52,6 +52,8 @@ class Twitter(SocialNetwork):
                 consumer_token_secret,
                 signature_type="auth_header",
             )
+            if self.debug:
+                print("Initialized")
 
     def get(self, **kwargs):
         raise NotImplementedError

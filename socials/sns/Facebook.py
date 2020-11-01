@@ -43,7 +43,7 @@ class Facebook(SocialNetwork):
                 me = self.graph.get_object("me", fields="id")
                 self.my_id = me.get("id", None)
                 if self.debug:
-                    print(f"Your Facebook id is: {self.my_id}")
+                    print(f"Initialized")
             except Exception as err:
                 if self.debug:
                     print("ERROR: could not initialize Facebook! X_X", err)
