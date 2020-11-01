@@ -60,6 +60,10 @@ Make also sure, that your app is able to get both an access, and a refresh token
 
 ![img](./docs/LinkedInTokens.png)
 
+### Mastodon
+The good thing is that you only need to get an access_token only once (it does not expire): <br>
+
+![img](./docs/Mastodon.png)
 
 ## Install
 git clone, cd to the root of this repo and run:
