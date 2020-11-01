@@ -11,7 +11,8 @@ Started with Facebook, Instagram, Twitter, Mastodon, LinkedIn
 For every network, you will need authentication. <br>
 You should first provide the required credentials in a dot env file.<br>
 A template is available here: [./env.template](./env.template) with contents:
- ```
+
+```
 FACEBOOK_ACCESS_TOKEN=
 
 TWITTER_CONSUMER_KEY=
@@ -50,15 +51,28 @@ LINKED_ACCESS_TOKEN_EXPIRES_IN=5183999
 LINKED_REFRESH_TOKEN_EXPIRES_IN=31535999
 ```
 
+### LinkedIn
+Make sure your app asks for the `r_liteprofile` and `w_member_social` permissions in order to get the user's urn and post on his/her behalf. <br>
+
+![img](./docs/LinkedInScopes.png)
+
+Make also sure, that your app is able to get both an access, and a refresh token, so we can update expired tokens. <br>
+
+![img](./docs/LinkedInTokens.png)
+
+
 ## Install
 git clone, cd to the root of this repo and run:
+
 ```
 python3 setup.py install --user
 ```
+
 or build a wheel and install it with pip:
+
 ```
 python3 setup.py python sdist bdist_wheel
-pip install ./dist/*.whl
+pip install --user ./dist/*.whl
 ```
 ## Libraries - Credits
 The implementation either makes use or is inspired by the implementation of:<br>
