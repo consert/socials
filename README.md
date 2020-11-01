@@ -1,5 +1,5 @@
 ## Socials
-A socials networks CRUD operations attempt <br>
+A social networks CRUD operations attempt <br>
 WIP implementation of basic social networking operations like 'read', 'create', 'search', 'update', 'delete' content.<br>
 Started with Facebook, Instagram, Twitter, Mastodon, LinkedIn
 
@@ -60,9 +60,14 @@ or build a wheel and install it with pip:
 python3 setup.py python sdist bdist_wheel
 pip install ./dist/*.whl
 ```
-## Libraries used / Credits
+## Libraries - Credits
 The implementation either makes use or is inspired by the implementation of:<br>
 [Facebook]: [https://github.com/mobolic/facebook-sdk](https://github.com/mobolic/facebook-sdk) <br>
 [Mastodon]:  [https://github.com/halcy/Mastodon.py](https://github.com/halcy/Mastodon.py) <br>
 [Instagram]: [https://pypi.org/project/instabot/](https://pypi.org/project/instabot/) <br>
-[LinkedIn]: [https://pypi.org/project/python-linkedin-v2/](https://pypi.org/project/python-linkedin-v2/)
+[LinkedIn]: [https://pypi.org/project/python-linkedin-v2/](https://pypi.org/project/python-linkedin-v2/) <br>
+[Twitter]: [https://pypi.org/project/requests-oauthlib/](https://pypi.org/project/requests-oauthlib/) <br>
+[.env]: [https://pypi.org/project/python-dotenv/](https://pypi.org/project/python-dotenv/) <br>
+[requirements.txt](./requirements.txt)
+## Licence
+MIT [LICENSE](./LICENSE)
