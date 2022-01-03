@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 import os
 import sys
 import re
@@ -25,7 +25,7 @@ try:  # noqa
 except ImportError:
     try:
         sys.path.append(os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
-    except (NameError, Exception) as e:
+    except (NameError, Exception):
         sys.path.append(os.path.realpath(os.path.join(os.path.dirname("."), "..")))
     from socials.env import (
         LINKEDIN_APP_CLIENT_ID,
@@ -44,9 +44,11 @@ SERVER_LIFETIME = 60
 LINKEDIN_TOKEN_ENDPOINT = "https://www.linkedin.com/oauth/v2/accessToken"
 
 
-def get_authorization_url_and_start_server():
-    """Get an authorization url an print it prompting the user
-    to follow it and authorize the app in order to make requests on his/her behalf.
+def get_authorization_url_and_start_server(debug=False):
+    """Get an authorization url and start a server to listen for the redirect.
+
+    prints the url prompting the user to follow it and authorize the app
+    in order to make requests on his/her behalf.
     a simple http server is spawn after this waiting for the redirection.
     """
     client_id = os.environ.get(LINKEDIN_APP_CLIENT_ID, None)
@@ -72,7 +74,7 @@ def get_authorization_url_and_start_server():
         f"Open within the next {SERVER_LIFETIME} seconds "
         f"the authorization link below to authorize posting on your behalf:\n{authorization_url}"
     )
-    _linkedin_temp_server(client_id, client_secret, listening_port, redirect_uri)
+    _linkedin_temp_server(client_id, client_secret, listening_port, redirect_uri, debug)
 
 
 def _token_expired():
@@ -96,6 +98,7 @@ def _token_expired():
 
 
 def check_token_expiration():
+    """Check if the token is expired and if so, update it."""
     if _token_expired():
         # try updating it
         _update_token()
@@ -104,7 +107,7 @@ def check_token_expiration():
         raise RuntimeError("Could not refresh the expired access token")
     # we don't even have a token variable ?
     if not os.environ.get("LINKEDIN_ACCESS_TOKEN", None):
-        raise RuntimeError("Could not raed the access token")
+        raise RuntimeError("Could not read the access token")
 
 
 def _update_token():
@@ -170,10 +173,11 @@ def _save_token(response):
                 _f.write(variables)
         except (PermissionError, Exception) as err:
             print("Error saving the token:", err)
-            raise e
+            raise err
 
 
 def wait_until(condition, timeout, period=1, *args, **kwargs):
+    """Wait until the condition is met or the timeout is reached."""
     must_end = time.time() + timeout
     while time.time() < must_end:
         if condition(*args, **kwargs):
@@ -182,7 +186,7 @@ def wait_until(condition, timeout, period=1, *args, **kwargs):
     return False
 
 
-def _linkedin_temp_server(client_id, client_secret, port, redirect_uri):
+def _linkedin_temp_server(client_id, client_secret, port, redirect_uri, debug=False):
     """Spawn a server temporarily to handle an authorization redirection after authorizing the linkedin app.
 
     Requirement: On app creation, the redirect uri must match the hostname this scripts is running at.
@@ -197,6 +201,8 @@ def _linkedin_temp_server(client_id, client_secret, port, redirect_uri):
             p = self.path.split("?")
             if len(p) > 1:
                 params = parse.parse_qs(p[1], True, True)
+                if debug:
+                    print(params)
                 if "code" in params:
                     authorization_code = params["code"][0]
                     query_data = {
@@ -211,6 +217,8 @@ def _linkedin_temp_server(client_id, client_secret, port, redirect_uri):
                             LINKEDIN_TOKEN_ENDPOINT, data=query_data, timeout=60
                         )
                         response = response.json()
+                        if debug:
+                            print("response:", response)
                         _save_token(response)
                     except Exception as err:
                         print("could not get a token: ", err)

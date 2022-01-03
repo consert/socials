@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 import os
 from dotenv import load_dotenv
 
@@ -54,12 +54,14 @@ dot_env_path = _find_dot_env()
 
 
 def dot_env_file():
+    """Get the path to the .env file."""
     if os.path.exists(dot_env_path) and os.path.isfile(dot_env_path):
         return os.path.realpath(dot_env_path)
     return None
 
 
 def load_env():
+    """Load .env file."""
     load_dotenv(dotenv_path=dot_env_path)
 
 

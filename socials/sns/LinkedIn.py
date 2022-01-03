@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 import os
 import requests
 from typing import TYPE_CHECKING
@@ -14,6 +14,8 @@ if TYPE_CHECKING:
 
 
 class LinkedIn(SocialNetwork):
+    """LinkedIn Implementation."""
+
     access_token = None
     my_urn = None
     headers = {
@@ -24,15 +26,17 @@ class LinkedIn(SocialNetwork):
     base_url = "https://api.linkedin.com/v2"
 
     def __init__(self, debug=False):
+        """Class Initialization."""
         super().__init__(
-            sn_key=SocialNetworkType.linkedin, debug=debug,
+            sn_key=SocialNetworkType.linkedin,
+            debug=debug,
         )
         self.access_token = os.environ.get(LINKEDIN_ACCESS_TOKEN, None)
         if not self.access_token:
             print(
                 "Could not find an existing linkedin access token, trying to get one..."
             )
-            get_authorization_url_and_start_server()
+            get_authorization_url_and_start_server(debug=debug)
         self.access_token = os.environ.get(LINKEDIN_ACCESS_TOKEN, None)
         if not self.access_token and self.debug:
             print("Still no access token, cannot continue :(")
@@ -50,10 +54,12 @@ class LinkedIn(SocialNetwork):
                 print("Could not get your id :(", err)
 
     def get(self, **kwargs):
+        """Read Posts."""
         raise NotImplementedError
 
     def _get_media_asset_and_upload_url(self):
-        """
+        """Upload a media file to LinkedIn.
+
         on success we get sth like:
         {
             "value": {
@@ -144,7 +150,8 @@ class LinkedIn(SocialNetwork):
         return share_category
 
     def post(self, text=None, url=None, media=None, **kwargs):
-        """
+        """Create a new post.
+
         required scope: w_member_social
         docs:
         https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin?context=linkedin/consumer/context#share-media
@@ -188,9 +195,13 @@ class LinkedIn(SocialNetwork):
                         },
                     }
             response = requests.post(
-                _url, json=params, headers=self.headers, timeout=REQUESTS_TIMEOUT,
+                _url,
+                json=params,
+                headers=self.headers,
+                timeout=REQUESTS_TIMEOUT,
             )
-            print(response.json())
+            if self.debug:
+                print(response.json())
             return (
                 {"message": "Post created successfully"}
                 if response.status_code < 400
@@ -202,12 +213,15 @@ class LinkedIn(SocialNetwork):
         return None
 
     def update(self, **kwargs):
+        """Patch a post."""
         raise NotImplementedError
 
     def delete(self, **kwargs):
+        """Delete a post."""
         raise NotImplementedError
 
     def search(self, q, **kwargs):
+        """Search for posts."""
         raise NotImplementedError
 
 

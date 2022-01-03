@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 import os
 import sys
 from typing import List
@@ -11,7 +11,7 @@ try:  # noqa
 except ImportError:
     try:
         sys.path.append(os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
-    except (NameError, Exception) as e:
+    except (NameError, Exception):
         sys.path.append(os.path.realpath(os.path.join(os.path.dirname("."), "..")))
     from socials.social_network import SocialNetwork, SocialNetworkType
     from socials.env import MASTODON_INSTANCE_KEYS
@@ -22,7 +22,8 @@ class Mastodon(SocialNetwork):
 
     def __init__(self, debug=False):
         super().__init__(
-            sn_key=SocialNetworkType.mastodon, debug=debug,
+            sn_key=SocialNetworkType.mastodon,
+            debug=debug,
         )
         instance_keys_string = os.environ.get(MASTODON_INSTANCE_KEYS, None)
         if not instance_keys_string:

@@ -22,19 +22,21 @@ class SocialNetworkType(str, Enum):
 
 
 class SocialNetwork(object):
-    """
-        Abstract Social Network class.
+    """Abstract Social Network class.
 
-        Inherit this class and implement any of the
-        ``get``, ``post``, ``update``, ``delete``, ``search``
-        methods you want to use
+    Inherit this class and implement any of the
+    ``get``, ``post``, ``update``, ``delete``, ``search``
+    methods you want to use
 
     """
 
     def __init__(
-        self, sn_key=SocialNetworkType.none, debug=False,
+        self,
+        sn_key=SocialNetworkType.none,
+        debug=False,
     ):
         # type: (SocialNetworkType, bool) -> None
+        """Class constructor."""
         load_env()
         self.debug = debug  # type: bool
         self.sn_key = sn_key  # type: SocialNetworkType
@@ -49,8 +51,7 @@ class SocialNetwork(object):
         timeout=REQUESTS_TIMEOUT,  # type: Optional[int]
     ):
         # type: (...) ->  Optional[Union[Dict[str,Union[bytes,str]], Dict[str, str]]]
-        """
-        General purpose request.
+        """General purpose request.
 
         method: one of: ``GET``, ``OPTIONS``, ``HEAD``, ``POST``, ``PUT``, ``PATCH``, or ``DELETE``
         """
@@ -64,7 +65,7 @@ class SocialNetwork(object):
         kw = dict(data=data, params=params, headers=headers, timeout=timeout)
 
         try:
-            response = requests.request(method.upper(), url, **kw)
+            response = requests.request(method.upper(), url, **kw)  # type: ignore #noqa
             return response.json() if response.status_code < 400 else None
         except (requests.HTTPError, Exception) as e:
             if self.debug:
@@ -79,7 +80,7 @@ class SocialNetwork(object):
             return os.path.realpath(media)
         media = str(media)
         local_path = self.download_media(media)
-        if not os.path.exists(local_path):  # noqa
+        if not local_path or not os.path.exists(local_path):  # noqa
             if self.debug:
                 print("Could nof find the local path of the image")
             return None
@@ -184,12 +185,12 @@ class SocialNetwork(object):
     def delete(self, **kwargs):
         # type: (Any) -> Optional[Union[Dict[str,Union[bytes,str]], Dict[str, str]]]
         """
-       Delete content from a social network.
+        Delete content from a social network.
 
-       For every SN implementation i.e.:
-           class ANewSN(SocialNetwork):
-               ....
+        For every SN implementation i.e.:
+            class ANewSN(SocialNetwork):
+                ....
 
-       this function has to be overridden / implemented
-       """
+        this function has to be overridden / implemented
+        """
         raise NotImplementedError

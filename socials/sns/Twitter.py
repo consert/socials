@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 import os
 import sys
 import requests
@@ -33,7 +33,8 @@ class Twitter(SocialNetwork):
 
     def __init__(self, debug=False):
         super().__init__(
-            sn_key=SocialNetworkType.twitter, debug=debug,
+            sn_key=SocialNetworkType.twitter,
+            debug=debug,
         )
         consumer_key = os.environ.get(TWITTER_CONSUMER_KEY, None)
         consumer_secret = os.environ.get(TWITTER_CONSUMER_SECRET, None)

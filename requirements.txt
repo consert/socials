@@ -1,7 +1,7 @@
-requests
-requests_oauthlib==1.3.0
 facebook-sdk @ git+https://github.com/mobolic/facebook-sdk.git#egg=facebook-sdk
+instabot==0.117.0
 Mastodon.py==1.5.1
 python-dotenv
 python-dateutil==2.8.1
-instabot==0.117.0
+requests
+requests_oauthlib==1.3.0

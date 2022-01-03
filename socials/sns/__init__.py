@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 from .Facebook import Facebook as Facebook
 from .Twitter import Twitter as Twitter
 from .Instagram import Instagram as Instagram

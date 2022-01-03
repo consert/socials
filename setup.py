@@ -1,13 +1,22 @@
-# -*- coding: utf-8 -*-
-
+"""-*- coding: utf-8 -*-."""
+import os
+import ast
 from setuptools import setup, find_packages
-from socials import __version__
+
 
 with open("requirements.txt") as f:
     REQUIREMENTS = f.read().splitlines()
+REQUIREMENTS.extend(["setuptools", "setuptools-git", "wheel"])
+version = "0.0.1"
+
+with open(os.path.join("socials", "version.py")) as text:
+    for line in text:
+        if line.startswith("__version__"):
+            version = ast.parse(line).body[0].value.s
+            break
 setup(
     name="socials",
-    version=__version__,
+    version=version,
     url="https://github.com/consert/socials",
     license="MIT",
     author="Lazaros Toumanidis",

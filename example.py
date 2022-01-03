@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 import os
 import sys
 
@@ -8,7 +8,7 @@ except ImportError:
     try:
         # if in jupyter notebook, we get a NameError ( no: __file__)
         sys.path.append(os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
-    except (NameError, Exception) as e:
+    except (NameError, Exception):
         sys.path.append(os.path.realpath(os.path.join(os.path.dirname("."), "..")))
     from socials import Facebook, Twitter, Mastodon, LinkedIn, Instagram, SocialNetwork
 
@@ -96,7 +96,9 @@ def instagram_example(debug=True):  # noqa
 def sn_example(debug=True):  # noqa
     sn = SocialNetwork(debug=_debug)
     local_media_path = sn.download_media(
-        one_image_url, name="a_random_image", destination_dir=os.path.realpath("."),
+        one_image_url,
+        name="a_random_image",
+        destination_dir=os.path.realpath("."),
     )
     if os.path.exists(local_media_path):
         os.unlink(local_media_path)
@@ -104,6 +106,7 @@ def sn_example(debug=True):  # noqa
 
 def main(debug=True):
     # type: (bool) -> None
+    """Usage of the socials package."""
     ...
     # sn_example(debug=debug)
     # linkedin_example(debug=debug)

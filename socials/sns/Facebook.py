@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 import os
 import sys
 import requests
@@ -11,7 +11,7 @@ try:  # noqa
 except ImportError:
     try:
         sys.path.append(os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
-    except (NameError, Exception) as e:
+    except (NameError, Exception):
         sys.path.append(os.path.realpath(os.path.join(os.path.dirname("."), "..")))
     from socials.env import FACEBOOK_ACCESS_TOKEN, REQUESTS_TIMEOUT
     from socials.social_network import SocialNetwork, SocialNetworkType
@@ -23,13 +23,17 @@ FACEBOOK_API_VERSION = "3.1"
 
 
 class Facebook(SocialNetwork):
+    """Facebook implementation."""
+
     graph = None
     my_id = None
     base_url = f"https://graph.facebook.com/v{FACEBOOK_API_VERSION}"
 
     def __init__(self, debug=False):
+        """Class constructor."""
         super().__init__(
-            sn_key=SocialNetworkType.facebook, debug=debug,
+            sn_key=SocialNetworkType.facebook,
+            debug=debug,
         )
         # load env vars after calling super().__init__(*args, **kwargs)
         self.access_token = os.environ.get(FACEBOOK_ACCESS_TOKEN, None)
@@ -43,13 +47,14 @@ class Facebook(SocialNetwork):
                 me = self.graph.get_object("me", fields="id")
                 self.my_id = me.get("id", None)
                 if self.debug:
-                    print(f"Initialized")
+                    print("Initialized")
             except Exception as err:
                 if self.debug:
                     print("ERROR: could not initialize Facebook! X_X", err)
 
     def search(self, q=None, **kwargs):
-        """
+        """Search for a Facebook user or page.
+
         https://developers.facebook.com/docs/places/search
             example:
             search(type=place, q=McDonalds, fields=name,checkins,website)
@@ -86,6 +91,7 @@ class Facebook(SocialNetwork):
 
     def get(self, **kwargs):
         # type: (Any) ->  Optional[Union[Dict[str,Union[bytes,str]], Dict[str, str], Generator[Union[int,str],Any, None]]] # noqa
+        """Get a Facebook user or page."""
         if not self.my_id or not self.graph:
             if self.debug:
                 print("Could not initialize me :(")
@@ -111,12 +117,13 @@ class Facebook(SocialNetwork):
         return self.graph.get_objects(ids, **kwargs)
 
     def post(self, text=None, url=None, media=None, **kwargs):
-        parent_object = kwargs.get("parent_object", "me")
+        """Create a post on Facebook."""
+        parent_obj = kwargs.get("parent_object", "me")
         connection_name = kwargs.get("connection_name", "feed")
         response = None
         try:
             if media:
-                url = f"{FACEBOOK_GRAPH_URL}/{parent_object}/photos?access_token={self.access_token}"
+                url = f"{FACEBOOK_GRAPH_URL}/{parent_obj}/photos?access_token={self.access_token}"
                 if os.path.exists(media):
                     name = os.path.split(media)[-1]
                     files = {name: open(media, "rb")}
@@ -131,14 +138,14 @@ class Facebook(SocialNetwork):
             else:
                 if url:
                     response = self.graph.put_object(
-                        parent_object=parent_object,
+                        parent_object=parent_obj,
                         connection_name=connection_name,
                         message=text,
                         link=url,
                     )
                 else:
                     response = self.graph.put_object(
-                        parent_object=parent_object,
+                        parent_object=parent_obj,
                         connection_name=connection_name,
                         message=text,
                     )
@@ -150,9 +157,11 @@ class Facebook(SocialNetwork):
             return None
 
     def update(self, **kwargs):
+        """Patch a post on Facebook."""
         raise NotImplementedError
 
     def delete(self, **kwargs):
+        """Delete a post on Facebook."""
         raise NotImplementedError
 
 

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""-*- coding: utf-8 -*-."""
 import logging
 import os
 from typing import TYPE_CHECKING
@@ -11,11 +11,15 @@ if TYPE_CHECKING:
 
 
 class Instagram(SocialNetwork):
+    """Instagram implementation."""
+
     instance = None  # type: Optional[Bot]
 
     def __init__(self, debug=False):
+        """Class Initialization."""
         super().__init__(
-            sn_key=SocialNetworkType.instagram, debug=debug,
+            sn_key=SocialNetworkType.instagram,
+            debug=debug,
         )
         instagram_login = os.environ.get(INSTAGRAM_LOGIN, None)
         instagram_password = os.environ.get(INSTAGRAM_PASSWORD, None)
@@ -37,6 +41,7 @@ class Instagram(SocialNetwork):
             raise RuntimeError("Could not initialize Instagram")
 
     def get(self, **kwargs):
+        """Read Posts."""
         if not self.instance:
             return None
         # TODO: check from kwargs what to get, example:
@@ -44,6 +49,7 @@ class Instagram(SocialNetwork):
         raise NotImplementedError
 
     def post(self, text=None, url=None, media=None, **kwargs):
+        """Create a new post."""
         if media is None:
             raise ValueError("A media file (photo) is required")
         remove_after_upload = False
@@ -63,12 +69,15 @@ class Instagram(SocialNetwork):
         return response
 
     def search(self, q, **kwargs):
+        """Search for a post."""
         raise NotImplementedError
 
     def update(self, **kwargs):
+        """Patch a post."""
         raise NotImplementedError
 
     def delete(self, **kwargs):
+        """Delete a post."""
         raise NotImplementedError
 
 
