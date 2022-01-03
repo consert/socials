@@ -55,7 +55,7 @@ def get_authorization_url_and_start_server(debug=False):
     client_secret = os.environ.get(LINKEDIN_APP_CLIENT_SECRET, None)
     redirect_uri = os.environ.get(LINKEDIN_REDIRECT_URI, None)
     listening_port = os.environ.get(LINKEDIN_LISTENING_PORT, "8000")
-    scopes_list = ["r_1st_connections_size", "r_liteprofile", "w_member_social"]
+    scopes_list = ["r_liteprofile", "w_member_social"]
     scopes = "+".join(scopes_list)
     try:
         listening_port = int(listening_port)
