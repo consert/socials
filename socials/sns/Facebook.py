@@ -2,6 +2,7 @@
 import os
 import sys
 import requests
+import json
 from facebook import GraphAPI, FACEBOOK_GRAPH_URL  # noqa
 from typing import TYPE_CHECKING
 
@@ -48,6 +49,8 @@ class Facebook(SocialNetwork):
                 self.my_id = me.get("id", None)
                 if self.debug:
                     print("Initialized")
+                    print("Account:")
+                    print(json.dumps(me, indent=4))
             except Exception as err:
                 if self.debug:
                     print("ERROR: could not initialize Facebook! X_X", err)

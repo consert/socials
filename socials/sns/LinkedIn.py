@@ -1,5 +1,6 @@
 """-*- coding: utf-8 -*-."""
 import os
+import json
 import requests
 from typing import TYPE_CHECKING
 from socials.env import LINKEDIN_ACCESS_TOKEN, REQUESTS_TIMEOUT
@@ -48,6 +49,8 @@ class LinkedIn(SocialNetwork):
             self.my_urn = f"urn:li:person:{me.get('id')}"
             if self.debug:
                 print("Initialized")
+                print("Account:")
+                print(json.dumps(me, indent=4))
 
         except (requests.HTTPError, Exception) as err:
             if debug:
