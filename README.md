@@ -66,6 +66,10 @@ The good thing is that you only need to get an access_token only once (it does n
 ![img](./docs/Mastodon.png)
 
 ## Install
+```
+pip3 install git+https://github.com/consert/socials.git
+```
+or
 git clone, cd to the root of this repo and run:
 
 ```
