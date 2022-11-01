@@ -75,7 +75,7 @@ python3 setup.py install --user
 or build a wheel and install it with pip:
 
 ```
-python3 setup.py python sdist bdist_wheel
+python3 setup.py bdist_wheel
 pip install --user ./dist/*.whl
 ```
 ## Libraries - Credits
