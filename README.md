@@ -75,6 +75,7 @@ python3 setup.py install --user
 or build a wheel and install it with pip:
 
 ```
+# if not already: `pip3 install wheel`
 python3 setup.py bdist_wheel
 pip install --user ./dist/*.whl
 ```
