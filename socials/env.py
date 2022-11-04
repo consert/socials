@@ -48,8 +48,12 @@ def write_default_env(file_path):
         for instance_key in mastodon_instance_keys:
             _instance_url_key = f"MASTODON_{instance_key}_URL"
             _instance_token_key = f"MASTODON_{instance_key}_TOKEN"
+            _instance_client_id = f"MASTODON_{instance_key}_CLIENT_ID"
+            _instance_client_secret = f"MASTODON_{instance_key}_CLIENT_SECRET"
             mastodons.append(f"{_instance_url_key}={os.environ.get(_instance_url_key, '')}")
             mastodons.append(f"{_instance_token_key}={os.environ.get(_instance_token_key, '')}")
+            mastodons.append(f"{_instance_client_id}={os.environ.get(_instance_client_id, '')}")
+            mastodons.append(f"{_instance_client_secret}={os.environ.get(_instance_client_secret, '')}")
     with open(file_path, "w", encoding="utf-8") as file:
         file.write(f"""SMTP_HOST={os.environ.get("SMTP_HOST", "")}\n\
 SMTP_PORT={os.environ.get("SMTP_PORT", "")}\n\
@@ -86,8 +90,9 @@ def _find_dot_env():
     _possible_path = os.path.realpath(os.path.join(_here, "../.env"))
     if os.path.exists(_possible_path) and os.path.isfile(_possible_path):
         return _possible_path
-    write_default_env(os.path.realpath(os.path.join(_here, "./.env")))
-    return _possible_path
+    default_path = os.path.realpath(os.path.join(_here, "./.env"))
+    write_default_env(default_path)
+    return default_path
 
 
 dot_env_path = _find_dot_env()
